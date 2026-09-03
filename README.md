@@ -4,8 +4,11 @@ A collection of JavaScript exercises focused on algorithmic problem-solving, DOM
 
 ## Structure
 javascript-fundamentals/
+
 ├── algorithms/ # Algorithmic problem-solving exercises
+
 ├── dom/ # DOM manipulation exercises
+
 └── api-integration/ # REST API consumption exercises
 
 
