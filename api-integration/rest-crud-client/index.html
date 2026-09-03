@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel = "stylesheet" href = "style.css">
+</head>
+<body>
+
+    <h1>Aplikacija za polaznike</h1>
+    <button onclick = "prikaziSve()">Prikazi sve</button>
+    <input type = "text" id = "filter" placeholder="Filtriraj po gradu">
+    <button onclick = "prikaziFilter()">Filtriraj</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id polaznika</th>
+                <th>Ime</th>
+                <th>Prezime</th>
+                <th>Spol</th>
+                <th>Email</th>
+                <th>Adresa</th>
+                <th>Id grada</th>
+                <th>Tip polaznika</th>
+                <th>Id ustanove</th>
+                <th>Akcije</th>
+            </tr>
+        </thead>
+        <tbody id = "tijeloTabele"></tbody>
+    </table>
+
+    <h2>Dodaj polanznika</h2>
+    <input type = "text" id = "ime" placeholder="Unesi ime">
+    <input type = "text" id = "prezime" placeholder="Unesi prezime">
+    <input type = "text" id = "spol" placeholder="Unesi spol">
+    <input type = "text" id = "email" placeholder="Unesi mail">
+    <input type = "text" id = "adresa" placeholder="Unesi adresu">
+    <input type = "text" id = "idGrada" placeholder="Unesi id grada">
+    <select id = "tipPolaznika"></select>
+    <input type = "text" id = "idUstanove" placeholder="Unesi id ustanove">
+    <button onclick = "dodaj()">Dodaj</button>
+    <p id = "porukaGreske" style = "color:red;font-weight: bold;"></p>
+    <script src = "script.js"></script>
+</body>
+</html>
