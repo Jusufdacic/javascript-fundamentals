@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="glavni">
+        <label>Unesi tekst: </label><input type="text" id="paragraf"><br>
+        <label>Unesi hex. vr. boje:</label><input type="text" id="hexBoja"><br>
+        <div id="dugmad">
+            <button onclick="submit()">Submit</button><br>
+            <button onclick="applyCSS()">Apply CSS</button>
+        </div>
+        <p id="greska"></p>
+    </div>
+    <script>
+        const $ = id => document.getElementById(id);
+        let klase = ["klasa1", "klasa2", "klasa3", "klasa4", "klasa5"];
+        let dozvoljeniZaBoju = "0123456789abcdefABCDEF";
+        let p;
+        function submit() {
+            for (let i = 0; i < $("hexBoja").value.length; i++) {
+                if (!dozvoljeniZaBoju.includes($("hexBoja").value[i])) {
+                    $("greska").innerHTML = "Unjeli ste nedozvoljen karakter za boju!"
+                    return;
+                }
+            }
+            if ($("paragraf").value.trim() === "" || $("hexBoja").value.trim() === "") {
+                $("greska").innerHTML = "Niste unjeli nikakvu vrijednost"
+                return
+            }
+            else if ($("hexBoja").value.length !== 6) {
+                $("greska").innerHTML = "Pogresan unos boje";
+                return;
+            }
+            if (p) {
+                p.remove();
+            }
+            $("greska").innerHTML = "";
+            p = document.createElement("p");
+            p.innerHTML = $("paragraf").value;
+            p.style.backgroundColor = "#" + $("hexBoja").value;
+            document.body.appendChild(p);
+            $("paragraf").value = "";
+            $("hexBoja").value = "";
+
+        }
+        function applyCSS() {
+            if (!p) {
+                $("greska").innerHTML = "Paragraf nema vrijednost";
+                return;
+            }
+            let randomBroj = Math.floor(Math.random() * (4 - 0 + 1)) + 0;
+            p.className = klase[randomBroj];
+        }
+    </script>
+</body>
+
+</html>

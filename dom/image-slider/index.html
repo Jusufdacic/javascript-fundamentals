@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #roditelj {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        #opis {
+            color: #737373;
+        }
+
+        #thumbnails {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #dugmad {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 3px 5px;
+        }
+
+        #glavnaSlika {
+            border: none;
+            border-radius: 10px;
+            width: 400px;
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .thumbs {
+            border-radius: 3px;
+            width: 70px;
+            height: 45px;
+            background-position: center;
+            background-size: cover;
+            cursor: pointer;
+        }
+
+        .thumbs:hover {
+            border: 2px solid #676767;
+        }
+
+        .klasaBorder {
+            border-radius: 3px;
+            width: 70px;
+            height: 45px;
+            background-position: center;
+            background-size: cover;
+            cursor: pointer;
+            border: 2px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="roditelj">
+        <div id="glavnaSlika"></div>
+        <p id="opis"></p>
+        <div id="thumbnails">
+            <div onclick="poziv1()" class="thumbs" id="slika1"></div>
+            <div onclick="poziv2()" class="thumbs" id="slika2"></div>
+            <div onclick="poziv3()" class="thumbs" id="slika3"></div>
+            <div onclick="poziv4()" class="thumbs" id="slika4"></div>
+            <div onclick="poziv5()" class="thumbs" id="slika5"></div>
+        </div>
+        <p id="brojac">Slika: 1 / 5</p>
+        <div id="dugmad">
+            <button onclick="sljedeca()">Sljedeca</button>
+            <button onclick="prethodna()">Prethodna</button>
+            <button onclick="random()">Random</button>
+            <button onclick="resetuj()">Reset</button>
+        </div>
+    </div>
+    <script>
+        $ = id => document.getElementById(id);
+        let niz = [
+            "https://picsum.photos/1980/1080?random=1",
+            "https://picsum.photos/1980/1080?random=2",
+            "https://picsum.photos/1980/1080?random=3",
+            "https://picsum.photos/1980/1080?random=4",
+            "https://picsum.photos/1980/1080?random=5"
+        ]
+        let opisi = [
+            "Prva slika - ...",
+            "Druga slika - ...",
+            "Treca slika - ...",
+            "Cetvrta slika - ...",
+            "Peta slika - ..."
+        ]
+        let trenutna = 0;
+        $("glavnaSlika").style.backgroundImage = "url(" + niz[trenutna] + ")";
+        $("slika1").style.backgroundImage = "url(" + niz[0] + ")"
+        $("slika2").style.backgroundImage = "url(" + niz[1] + ")"
+        $("slika3").style.backgroundImage = "url(" + niz[2] + ")"
+        $("slika4").style.backgroundImage = "url(" + niz[3] + ")"
+        $("slika5").style.backgroundImage = "url(" + niz[4] + ")"
+
+
+        function sljedeca() {
+            trenutna++;
+            if (trenutna > 4) {
+                trenutna = 0;
+            }
+            $("glavnaSlika").style.backgroundImage = "url(" + niz[trenutna] + ")";
+            pracenjeStanja()
+        }
+        function prethodna() {
+            trenutna--;
+            if (trenutna < 0) {
+                trenutna = 4;
+            }
+            $("glavnaSlika").style.backgroundImage = "url(" + niz[trenutna] + ")";
+            pracenjeStanja()
+        }
+        function random() {
+            trenutna = Math.floor(Math.random() * (4 - 0 + 1)) + 0
+            $("glavnaSlika").style.backgroundImage = "url(" + niz[trenutna] + ")";
+            pracenjeStanja()
+        }
+        function poziv1() {
+            trenutna = 0;
+            $("glavnaSlika").style.backgroundImage = "url(" + niz[trenutna] + ")"
+            pracenjeStanja()
+        }
+        function poziv2() {
+            trenutna = 1;
+            $("glavnaSlika").style.backgroundImage = "url(" + niz[trenutna] + ")"
+            pracenjeStanja()
+        }
+        function poziv3() {
+            trenutna = 2;
+            $("glavnaSlika").style.backgroundImage = "url(" + niz[trenutna] + ")"
+            pracenjeStanja()
+        }
+        function poziv4() {
+            trenutna = 3;
+            $("glavnaSlika").style.backgroundImage = "url(" + niz[trenutna] + ")"
+            pracenjeStanja()
+        }
+        function poziv5() {
+            trenutna = 4;
+            $("glavnaSlika").style.backgroundImage = "url(" + niz[trenutna] + ")"
+            pracenjeStanja()
+        }
+        function pracenjeStanja() {
+            $("brojac").innerHTML = "Slika " + (trenutna + 1) + " / 5";
+            for (let i = 0; i < opisi.length; i++) {
+                if (i === trenutna) {
+                    $("opis").innerHTML = opisi[i];
+                }
+            }
+            dodjeljivanjeKlase()
+        }
+        function dodjeljivanjeKlase() {
+            for (let i = 0; i < 5; i++) {
+                if (i === trenutna) {
+                    $("slika" + (i + 1)).className = "klasaBorder";
+                }
+                else {
+                    $("slika" + (i + 1)).className = "thumbs";
+                }
+            }
+        }
+        function resetuj() {
+            trenutna = 0;
+            $("glavnaSlika").style.backgroundImage = "url(" + niz[trenutna] + ")"
+            pracenjeStanja()
+        }
+        pracenjeStanja()
+
+
+
+    </script>
+</body>
+
+</html>

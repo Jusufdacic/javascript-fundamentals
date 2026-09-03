@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Dionice</h1>
+    <label>Unesi broj dana dionica (N): </label><input type = "number" id = "brojDana"><br>
+    <label>Unesi dionice A[ ]: </label><input type = "text" id = "niz"><br>
+    <button onclick = "funkcija()">Nadji segmente</button>
+    <p id = "rezultat"></p>
+    <script>
+        function funkcija() {
+            let n = Number(document.getElementById("brojDana").value);
+            let niz = document.getElementById("niz").value.split(",");
+            
+            let praviNiz = [];
+            if(niz.length!==n) {
+                document.getElementById("rezultat").innerHTML = "N ne odgovara broju elemenata niza";
+            }
+            for(i = 0; i<niz.length; i++) {
+                let broj = Number(niz[i]);
+                if(isNaN(broj)) {document.getElementById("rezultat").innerHTML = "Niste unijeli pozitivne cijele brojeve"; return};
+                praviNiz.push(broj);
+            }
+
+            let rezultati = []
+            let imamDionicu = false;
+            let danKupovine = 0;
+            for(let i = 0; i<praviNiz.length-1;i++) {
+                if(praviNiz[i]<praviNiz[i+1] && imamDionicu===false){
+                    danKupovine = i;
+                    imamDionicu = true;
+                }
+                if(praviNiz[i]>praviNiz[i+1] && imamDionicu===true) {
+                    imamDionicu = false;
+                    rezultati.push([danKupovine, i, praviNiz[i]-praviNiz[danKupovine]]);
+                }
+            }
+            if(imamDionicu===true) {
+                let zadnjiDan = praviNiz.length-1;
+                rezultati.push([danKupovine, zadnjiDan,praviNiz[zadnjiDan]-praviNiz[danKupovine]]);
+                imamDionicu = false;
+            }
+
+            let ispis = "";
+            for(let i = 0; i<rezultati.length;i++){
+                ispis += "(" + rezultati[i][0] + " " + rezultati[i][1] + " Profit: " + rezultati[i][2] + ") "
+            }
+            document.getElementById("rezultat").innerHTML = "Rjesenje: " + ispis;
+
+        }
+    </script>
+    
+</body>
+</html>

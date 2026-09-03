@@ -1,0 +1,62 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+#glavni {
+    display: flex;
+    flex-direction: column;
+}
+
+#dugmad {
+    display: flex;
+    gap: 10px;
+}
+
+.klasa1 {
+    color: red;
+    font-style: italic;
+    font-family: 'Courier New', Courier, monospace;
+    border-top: 1px solid red;
+    border-bottom: 1px solid red;
+    padding: 10px;
+}
+
+.klasa2 {
+    color: green;
+    font-style: oblique;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-top: 1px solid green;
+    border-bottom: 1px solid green;
+    padding: 10px;
+}
+
+.klasa3 {
+    color: blue;
+    font-style: inherit;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    border-top: 1px solid blue;
+    border-bottom: 1px solid blue;
+    padding: 10px;
+}
+
+.klasa4 {
+    color: purple;
+    font-style: initial;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-top: 1px solid purple;
+    border-bottom: 1px solid purple;
+    padding: 10px;
+}
+
+.klasa5 {
+    color: yellow;
+    font-style: unset;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    border-top: 1px solid yellow;
+    border-bottom: 1px solid yellow;
+    padding: 10px;
+}

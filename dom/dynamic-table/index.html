@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input,
+        button {
+            margin: 5px 0 5px;
+        }
+
+        #tabela {
+            border: 1px solid #ddd;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 5px;
+            text-align: center;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .klasa1 {
+            background-color: blue;
+            color: purple;
+            border: 1px solid red;
+            font-family: fantasy;
+        }
+    </style>
+</head>
+
+<body>
+    <label>Unesi ime: </label><input type="text" id="imeUnos"><br>
+    <label>Ocjena: </label><input type="number" id="ocjenaUnos"><br>
+    <table id="tabela">
+        <thead>
+            <tr>
+                <th>Ime</th>
+                <th>Ocjena</th>
+            </tr>
+        </thead>
+        <tbody id="tijeloTabele"></tbody>
+    </table><br>
+    <p id="brRedova">Broj redova: </p><br>
+    <p id="prosjek">Prosjek ocjena: </p>
+    <button onclick="dodaj()">Dodaj</button><br>
+    <button onclick="zadnjiRed()">Obrisi zadnji red</button><br>
+    <button onclick="obojiNasumicno()">Oboji nasumičan red</button><br>
+    <button onclick="resetuj()">Resetuj</button>
+    <p id="greska"></p>
+    <script>
+        $ = id => document.getElementById(id);
+        let brojRedova = 0;
+        let cuvateljOcjena = [];
+        let prosjekOcjena = 0;
+        let randInt = 0;
+        function dodaj() {
+            if ($("imeUnos").value.trim() === "" || $("ocjenaUnos").value.trim() === "") {
+                $("greska").innerHTML = "Unjeli ste prazno!"
+                return;
+            }
+            else {
+                $("greska").innerHTML = "";
+                let ime = $("imeUnos").value;
+                let ocjena = Number($("ocjenaUnos").value);
+                if (isNaN(ocjena) || !Number.isInteger(ocjena) || ocjena < 1 || ocjena > 10) {
+                    $("greska").innerHTML = "Greska pri unosu!"
+                    return;
+                }
+                let noviRed = $("tijeloTabele").insertRow()
+                let celija1 = noviRed.insertCell();
+                let celija2 = noviRed.insertCell();
+                celija1.innerHTML = ime;
+                celija2.innerHTML = ocjena;
+                brojRedova++;
+                cuvateljOcjena.push(ocjena);
+                $("brRedova").innerHTML = "Broj redova: " + brojRedova;
+                izracunProsjeka();
+                $("imeUnos").value = "";
+                $("ocjenaUnos").value = "";
+            }
+        }
+        function izracunProsjeka() {
+            let suma = 0;
+            let brojOcjena = 0;
+            for (let i = 0; i < cuvateljOcjena.length; i++) {
+                if (Number.isInteger(cuvateljOcjena[i])) {
+                    suma += cuvateljOcjena[i];
+                    brojOcjena++
+                }
+                else { continue }
+            }
+            prosjekOcjena = suma / brojOcjena;
+            $("prosjek").innerHTML = "Prosjek ocjena: " + prosjekOcjena.toFixed(2);
+        }
+        function zadnjiRed() {
+            $("greska").innerHTML = "";
+            if ($("tabela").rows.length > 1) {
+                $("tabela").deleteRow($("tabela").rows.length - 1);
+                cuvateljOcjena[cuvateljOcjena.length - 1] = null;
+                izracunProsjeka();
+                brojRedova--;
+                $("brRedova").innerHTML = "Broj redova: " + brojRedova;
+            }
+            else {
+                $("greska").innerHTML = "Nije moguce obrisati nista jer niste dodali niti jedan red"
+                return;
+            }
+        }
+        function obojiNasumicno() {
+            $("greska").innerHTML = "";
+            if ($("tabela").rows.length > 1) {
+                if (randInt < $("tabela").rows.length) {
+                    $("tabela").rows[randInt].className = "";
+                }
+                randInt = Math.floor(Math.random() * ($("tabela").rows.length - 1 - 1 + 1)) + 1;
+                $("tabela").rows[randInt].className = "klasa1";
+
+            }
+            else {
+                $("greska").innerHTML = "Ne moze se bojiti red ako ga niste dodali!"
+                return;
+            }
+        }
+        function resetuj() {
+            brojRedova = 0;
+            cuvateljOcjena = [];
+            prosjekOcjena = 0;
+            randInt = 0;
+            $("imeUnos").value = "";
+            $("ocjenaUnos").value = "";
+            $("brRedova").innerHTML = "Broj redova: ";
+            $("greska").innerHTML = "";
+            $("prosjek").innerHTML = "Prosjek ocjena: ";
+            $("tijeloTabele").innerHTML = "";
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="nizZaPretvorit" placeholder="Unesi niz"><br>
+    <button onclick="izvrsi()">Izvrsi</button><br>
+    <p id="izlaz">Izlaz:</p>
+    <script>
+        const $ = id => document.getElementById(id);
+        function izvrsi() {
+            let niz = [];
+            let nizStr = $("nizZaPretvorit").value.split(",");
+            for (let i = 0; i < nizStr.length; i++) {
+                if (!Number.isInteger(Number(nizStr[i])) || isNaN(Number(nizStr[i])) || Number(nizStr[i]) < 0) {
+                    $("izlaz").innerHTML = "Neispravan unos u nizu!";
+                    return;
+                }
+                niz.push(Number(nizStr[i]));
+            }
+            let ukupnaKolicina = 0;
+            let gr1 = 0;
+            let gr2 = 0;
+            for (let i = 1; i < niz.length; i++) {
+                if (niz[i] >= niz[gr1] || niz[i] <= niz[gr1] && i === niz.length - 1) {
+                    gr2 = i;
+                    let min = 0;
+                    if (niz[gr1] < niz[gr2]) { min = gr1 }
+                    else { min = gr2 }
+                    if (min === gr1) {
+                        for (let j = gr1 + 1; j < i; j++) {
+                            ukupnaKolicina += niz[min] - niz[j];
+                        }
+                    }
+                    else if (min === gr2) {
+                        for (let j = gr2 - 1; j > gr1; j--) {
+                            if (niz[j] > niz[min]) {
+                                min = j;
+                                continue;
+                            }
+                            ukupnaKolicina += niz[min] - niz[j];
+                        }
+                    }
+                    gr1 = gr2;
+                }
+            }
+            $("izlaz").innerHTML = "Izlaz: " + ukupnaKolicina;
+        }
+    </script>
+</body>
+</html>

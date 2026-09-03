@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #tabela {
+            border: 1px solid black;
+            border-collapse: collapse;
+            width: 200px;
+            height: 400px;
+        }
+
+        td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <table id="tabela">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table><br>
+    <button onclick="generisi()">Generisi</button>
+    <button onclick="resetuj()">Resetuj</button>
+    <script>
+        $ = id => document.getElementById(id);
+        let tekst = ["lijevo", "sredina", "desno"];
+        function generisi() {
+            resetuj()
+            for (let i = 0; i < $("tabela").rows.length; i++) {
+                let kolikoCelijaPopunjavamo = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+                let red = $("tabela").rows[i];
+                let brojacCelija = [];
+                while (brojacCelija.length < kolikoCelijaPopunjavamo) {
+                    let kojaCelijaBroj = Math.floor(Math.random() * (2 - 0 + 1)) + 0;
+                    if (!brojacCelija.includes(kojaCelijaBroj)) {
+                        { brojacCelija.push(kojaCelijaBroj) }
+                    }
+                    else {
+                        continue;
+                    }
+                    red.cells[kojaCelijaBroj].innerHTML = tekst[kojaCelijaBroj];
+                }
+            }
+        }
+        function resetuj() {
+            for (let i = 0; i < $("tabela").rows.length; i++) {
+                for (let j = 0; j < $("tabela").rows[i].cells.length; j++) {
+                    $("tabela").rows[i].cells[j].innerHTML = "";
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

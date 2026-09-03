@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label>Unesi prvi niz brojeva</label><input type = "text" id = "prviNiz"><br>
+    <label>Unesi drgui niz brojeva</label><input type = "text" id = "drugiNiz"><br>
+    <button onclick = "funkcija()">Izvrsi</button>
+    <p id = "rezultat"></p>
+    <script>
+        function funkcija() {
+        let niz1String = document.getElementById("prviNiz").value.split("");
+        let niz2String = document.getElementById("drugiNiz").value.split("");
+        let pocetno = [];
+        let krajnje = [];
+        if(niz1String.length!==niz2String.length) {
+            document.getElementById("rezultat").innerHTML = "Neodgovarajuci unos!";
+            return
+        }
+        for(let i=0; i<niz1String.length; i++) {
+            let broj1 = Number(niz1String[i]);
+            let broj2 = Number(niz2String[i]);
+            if(isNaN(broj1)||isNaN(broj2)) {
+                document.getElementById("rezultat").innerHTML = "Neodgovarajuci unos!";
+                return
+            }
+            pocetno.push(broj1);
+            krajnje.push(broj2);
+        }
+
+        let a = pocetno.slice().sort(function(a,b) {return a-b})
+        let b = krajnje.slice().sort(function(a,b) {return a-b})
+        if(a.join("")!==b.join("")) {
+            document.getElementById("rezultat").innerHTML = "Nisu ista permutacija!";
+            return;
+        }
+
+        let modificiraniNiz = pocetno.slice();
+        let brojacPermutacija = 0;
+        let ispisPermutacija = "";
+
+        while(modificiraniNiz.join("")!==krajnje.join("")) {
+            let pocetnaNulaIndeks = Infinity;
+            let krajnjaNulaIndeks = Infinity;
+            for(let i=0; i<modificiraniNiz.length; i++) {
+                if(modificiraniNiz[i]===0) {
+                    pocetnaNulaIndeks = i;
+                }
+                if(krajnje[i]===0) {
+                    krajnjaNulaIndeks = i;
+                }
+            }
+            if(pocetnaNulaIndeks===krajnjaNulaIndeks) {
+                for(let i=0; i<modificiraniNiz.length; i++) {
+                    if(modificiraniNiz[i]!==krajnje[i]){
+                        [modificiraniNiz[i], modificiraniNiz[pocetnaNulaIndeks]] = [modificiraniNiz[pocetnaNulaIndeks], modificiraniNiz[i]];
+                        break
+                    }
+                }
+            }
+            if(pocetnaNulaIndeks!==krajnjaNulaIndeks) {
+                let brojZamjene = krajnje[pocetnaNulaIndeks];
+                let indeksZamjene = Infinity;
+                for(let i=0; i<modificiraniNiz.length; i++) {
+                    if(modificiraniNiz[i]===brojZamjene) {
+                        indeksZamjene = i;
+                    }
+                }
+                [modificiraniNiz[pocetnaNulaIndeks], modificiraniNiz[indeksZamjene]] = [modificiraniNiz[indeksZamjene], modificiraniNiz[pocetnaNulaIndeks]];
+            }
+            brojacPermutacija++;
+            ispisPermutacija += modificiraniNiz.join("") + "<br>"
+        }
+        document.getElementById("rezultat").innerHTML = 
+        "Broj prermutacija: " + brojacPermutacija + "<br>" + ispisPermutacija;
+    }
+    </script>
+    
+</body>
+</html>

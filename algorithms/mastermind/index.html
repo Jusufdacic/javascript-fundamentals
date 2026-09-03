@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #babo {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+            background-color: rgb(230, 230, 230);
+            border-radius: 10px;
+            width: 800px;
+            padding: 5px;
+
+        }
+
+        #headerDiv {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-weight: 900;
+        }
+
+        #divUSredini {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        button {
+            width: fit-content;
+        }
+
+        input {
+            width: fit-content;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="babo">
+        <div id="header">
+            <div id="headerDiv">
+                <h1>Mastermind</h1>
+                <div id="dugmad">
+                    <button onclick="novaIgra()">Nova igra</button>
+                    <button onclick="otkrijKod()">Otkriji kod</button>
+                </div>
+            </div>
+            <p>Pogodi tajni kod od 4 cifre. Nakon svakog pokusaja dobijes: (1)<br>
+                tacne cifre na tacnom mjestu i (2) tacne cifre na pogresnom<br>
+                mjestu. Imas najvise 10 pokusaja.</p>
+        </div>
+        <div id="divUSredini">
+            <p id="kod">Kod: ****</p><br>
+            <input type="text" id="pokusajUnos" placeholder="Pokusaj: ">
+            <button id="provjeriDugme" onclick="provjeri()">Provjeri</button>
+            <p id="poruka"></p>
+            <p id="historija"></p>
+        </div>
+    </div>
+    <script>
+        let $ = id => document.getElementById(id);
+        let otkriven = false;
+        let nizKod = [];
+        let pokusaj = 1;
+
+        function generisiKod() {
+            nizKod = [];
+            for (let i = 0; i < 4; i++) {
+                let broj = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
+                nizKod.push(broj);
+            }
+        }
+        function otkrijKod() {
+            otkriven = !otkriven;
+            if (otkriven) {
+                $("kod").innerHTML = "Kod: " + nizKod.join("");
+            }
+            else {
+                $("kod").innerHTML = "Kod: ****";
+            }
+        }
+        function provjeri() {
+            if (pokusaj <= 10) {
+                let pokusajUnosa = $("pokusajUnos").value.split("");
+                let pokusajUnosaInt = [];
+
+                if (pokusajUnosa.length !== 4) {
+                    $("poruka").innerHTML = "Greska pri unosu!"
+                    return;
+                }
+
+                for (let i = 0; i < pokusajUnosa.length; i++) {
+                    if (isNaN(Number(pokusajUnosa[i]))) {
+                        $("poruka").innerHTML = "Greska pri unosu!"
+                        return;
+                    }
+                    pokusajUnosaInt.push(Number(pokusajUnosa[i]));
+                }
+
+                let tacnePozicije = 0;
+                for (let i = 0; i < pokusajUnosaInt.length; i++) {
+                    if (nizKod[i] === pokusajUnosaInt[i]) {
+                        tacnePozicije++;
+                    }
+                    if (tacnePozicije === 4) {
+                        $("poruka").innerHTML = "Pogodili ste kod!"
+                        $("provjeriDugme").disabled = true;
+                        $("pokusajUnos").disabled = true;
+                        return;
+                    }
+                }
+
+                let PoVrijednostiPoPoziciji = 0;
+                let UkoduPogresnaPozicija = 0;
+                let fakeNiz = pokusajUnosaInt.slice();
+                let nizKodGlavniFake = nizKod.slice();
+                for (let i = 0; i < fakeNiz.length; i++) {
+                    if (nizKodGlavniFake[i] === fakeNiz[i]) {
+                        PoVrijednostiPoPoziciji++;
+                        fakeNiz[i] = null;
+                        nizKodGlavniFake[i] = null;
+                        continue;
+                    }
+                }
+                for (let i = 0; i < fakeNiz.length; i++) {
+                    for (let j = 0; j < fakeNiz.length; j++) {
+                        if (nizKodGlavniFake[i] === fakeNiz[j] && nizKodGlavniFake[i] !== null) {
+                            UkoduPogresnaPozicija++;
+                            fakeNiz[j] = null;
+                            nizKodGlavniFake[i] = null;
+                            break;
+                        }
+                    }
+                }
+                pokusaj++;
+                $("historija").innerHTML +=
+                    "Pokusaj: " + pokusajUnosaInt.join("") + " Tacno mjesto: " + PoVrijednostiPoPoziciji + " | Pogresno mjesto: " + UkoduPogresnaPozicija + "<br>";
+            }
+            if (pokusaj > 10) {
+                $("provjeriDugme").disabled = true;
+                $("pokusajUnos").disabled = true;
+                $("poruka").innerHTML = "Niste pobjedili. Zao nam je!"
+            }
+        }
+
+        function novaIgra() {
+            $("poruka").innerHTML = "";
+            $("historija").innerHTML = "";
+            $("pokusajUnos").disabled = false;
+            $("provjeriDugme").disabled = false;
+            $("pokusajUnos").value = "";
+            $("kod").innerHTML = "Kod: ****";
+            otkriven = false;
+            pokusaj = 1;
+            generisiKod();
+        }
+        generisiKod();
+
+
+
+    </script>
+
+</body>
+
+</html>

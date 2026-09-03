@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Igra 21</h1>
+    <h2>Igrac 1</h2>
+    <p id="zbir1">Zbir 1:</p>
+    <p id="listaKarata1">Lista karata igraca 1:</p>
+    <h2>Igrac 2</h2>
+    <p id="zbir2">Zbir 2:</p>
+    <p id="listaKarata2">Lista karata igraca 2:</p>
+    <button id="izvuciKartuDugme" onclick="funkcija()">Izvuci kartu</button><br>
+    <button id="staniDugme" onclick="stani()">Stani</button><br>
+    <button onclick="novaIgra()">Nova igra</button><br>
+    <p id="rezultat">Rezultat:</p>
+
+    <script>
+        let $ = id => document.getElementById(id);
+        let lista1 = [];
+        let lista2 = [];
+        let zbir1 = 0;
+        let zbir2 = 0;
+        let sljedeciIgrac = 1;
+
+        function funkcija() {
+            let karta = Math.floor(Math.random() * (11 - 1 + 1)) + 1;
+            if (sljedeciIgrac === 1) {
+                lista1.push(karta);
+                zbir1 += karta;
+                $("zbir1").innerHTML = "Zbir 1: " + zbir1;
+                $("listaKarata1").innerHTML = "Lista karata igraca 1: " + lista1.join(", ");
+                if (zbir1 >= 21) {
+                    sljedeciIgrac++;
+                }
+            }
+            else if (sljedeciIgrac === 2) {
+                lista2.push(karta);
+                zbir2 += karta;
+                $("zbir2").innerHTML = "Zbir 2: " + zbir2;
+                $("listaKarata2").innerHTML = "Lista karata igraca 2: " + lista2.join(", ");
+                if (zbir2 >= 21) {
+                    $("izvuciKartuDugme").disabled = true;
+                    krajIgre();
+                }
+            }
+        }
+        function stani() {
+            if (sljedeciIgrac === 2) {
+                $("izvuciKartuDugme").disabled = true;
+                $("staniDugme").disabled = true;
+                krajIgre();
+            }
+            sljedeciIgrac++;
+        }
+        function krajIgre() {
+            if (zbir1 === zbir2 || zbir1 > 21 && zbir2 > 21) {
+                $("rezultat").innerHTML = "nerjeseno!";
+            }
+            else if (zbir1 === 21) {
+                $("rezultat").innerHTML = "Pobjednik je igrac 1 s 21!";
+            }
+            else if (zbir2 === 21) {
+                $("rezultat").innerHTML = "Pobjednik je igrac 2 s 21!";
+            }
+            else if (zbir1 < 21 && zbir1 > zbir2) {
+                $("rezultat").innerHTML = "Pobjednik je igrac 1!";
+            }
+            else if (zbir2 < 21 && zbir1 < zbir2) {
+                $("rezultat").innerHTML = "Pobjednik je igrac 2!";
+            }
+            else if (zbir1 > 21 && zbir2 < 21) {
+                $("rezultat").innerHTML = "Pobjednik je igrac 2!";
+            }
+            else if (zbir1 < 21 && zbir2 > 21) {
+                $("rezultat").innerHTML = "Pobjednik je igrac 1!";
+            }
+        }
+        function novaIgra() {
+            $("zbir1").innerHTML = "Zbir 1:";
+            $("zbir2").innerHTML = "Zbir 2:";
+            $("listaKarata1").innerHTML = "Lista karata igraca 1:";
+            $("listaKarata2").innerHTML = "Lista karata igraca 2:";
+            $("izvuciKartuDugme").disabled = false;
+            $("staniDugme").disabled = false;
+            lista1 = [];
+            lista2 = [];
+            zbir1 = 0;
+            zbir2 = 0;
+            sljedeciIgrac = 1;
+            $("rezultat").innerHTML = "";
+        }
+
+    </script>
+
+</body>
+
+</html>

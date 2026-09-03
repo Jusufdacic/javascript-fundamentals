@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="nizZaPretvorit" placeholder="Unesi niz"><br>
+    <button onclick="izvrsi()">Izvrsi</button><br>
+    <p id="izlaz">Izlaz:</p>
+    <script>
+         const $ = id => document.getElementById(id);
+            function izvrsi() {
+                let niz = [];
+                let nizStr = $("nizZaPretvorit").value.split(",");
+                for (let i = 0; i < nizStr.length; i++) {
+                    if (!Number.isInteger(Number(nizStr[i])) || isNaN(Number(nizStr[i]))) {
+                        $("izlaz").innerHTML = "Neispravan unos u nizu!";
+                        return;
+                    }
+                    niz.push(Number(nizStr[i]));
+                }
+                let zastava = true;
+                let pomjeraj;
+                if(niz[0]<niz[1]){pomjeraj=true}
+                else {pomjeraj = false}
+                for(let i = 0; i < niz.length-1; i++) {
+                    if(niz[i]<niz[i+1] && pomjeraj || niz[i] > niz[i + 1] && !pomjeraj) {
+                        pomjeraj = !pomjeraj;
+                    }
+                    else {
+                        zastava = false;
+                    }
+                }
+                if(zastava) {
+                    $("izlaz").innerHTML = "DA";
+                }
+                else {
+                    $("izlaz").innerHTML = "NE";
+                }
+            }
+    </script>
+</body>
+</html>

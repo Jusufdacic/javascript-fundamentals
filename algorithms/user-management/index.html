@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>User management</h1><br>
+    <label>Unesi ime:</label><input type = "text" id = "ime" placeholder="Ime"><br><br>
+    <label>Unesi prezime:</label><input type = "text" id = "prezime" placeholder="Prezime"><br><br>
+    <label>Unesi godinu rodjenja:</label><input type = "number" id = "godinaRodjenja" placeholder="GodinaRodjenja"><br><br>
+    <label>Unesi visinu u centrimetrima:</label><input type = "number" id = "visina" placeholder="Visina"><br><br>
+    <label>Unesi tezinu u kilogramima:</label><input type = "number" id = "tezina" placeholder="Tezina"><br><br>
+    <button onclick="add()">Add</button>
+    <button onclick="age()">Age</button>
+    <button onclick="bmi()">BMI</button>
+    <button onclick="obrisi()">Delete</button>
+    <button onclick="sequenceNumber()">Sequence number</button><br><br>
+    <p id = "ispis"></p>
+
+    <script>
+         let bazaPodataka = [];
+
+        function add() {
+            let ime = document.getElementById("ime").value;
+            let prezime = document.getElementById("prezime").value;
+            let godinaRodjenja = Number(document.getElementById("godinaRodjenja").value);
+            let visina = Number(document.getElementById("visina").value);
+            let tezina = Number(document.getElementById("tezina").value);
+
+            let normalizovanoIme = ime.charAt(0).toUpperCase() + ime.slice(1).toLowerCase();
+            let normalizovanoPrezime = prezime.charAt(0).toUpperCase() + prezime.slice(1).toLowerCase();
+
+            let korisnik = {
+                ime: normalizovanoIme,
+                prezime: normalizovanoPrezime,
+                godina: godinaRodjenja,
+                visina: visina,
+                tezina: tezina,
+            }
+
+            bazaPodataka.push(korisnik);
+
+            bazaPodataka.sort(function(a,b) {
+                if(a.ime.localeCompare(b.ime)!==0) {
+                    return a.ime.localeCompare(b.ime);
+                }
+                else {
+                    return a.prezime.localeCompare(b.prezime);
+                }
+            });
+
+            document.getElementById("ispis").innerHTML = "Uspjesno unesen korisnik!";
+        }
+
+        function age() {
+            let ime = document.getElementById("ime").value;
+            let prezime = document.getElementById("prezime").value;
+            let godinaRodjenja = Number(document.getElementById("godinaRodjenja").value);
+
+            let normalizovanoIme = ime.charAt(0).toUpperCase() + ime.slice(1).toLowerCase();
+            let normalizovanoPrezime = prezime.charAt(0).toUpperCase() + prezime.slice(1).toLowerCase();
+
+            let godine = 2026 - godinaRodjenja;
+
+            document.getElementById("ispis").innerHTML = "Pozdrav " + normalizovanoIme + " " + normalizovanoPrezime + 
+            ". Na osnovu unesene godine rodjenja, ti imas " + godine + " godina!"
+        }
+
+        function bmi() {
+            let ime = document.getElementById("ime").value;
+            let prezime = document.getElementById("prezime").value;
+            let visina = Number(document.getElementById("visina").value);
+            let tezina = Number(document.getElementById("tezina").value);
+
+            let normalizovanoIme = ime.charAt(0).toUpperCase() + ime.slice(1).toLowerCase();
+            let normalizovanoPrezime = prezime.charAt(0).toUpperCase() + prezime.slice(1).toLowerCase();
+
+            let visinaMetri = visina/100;
+            let bmiIndeks = tezina/(visinaMetri*visinaMetri);
+
+            document.getElementById("ispis").innerHTML = "Pozdrav " + normalizovanoIme + " " + normalizovanoPrezime + 
+            ". Vas BMI iznosi: " + bmiIndeks.toFixed(2) + "."
+        }
+
+        function obrisi() {
+            let ime = document.getElementById("ime").value;
+            let prezime = document.getElementById("prezime").value;
+            let normalizovanoIme = ime.charAt(0).toUpperCase() + ime.slice(1).toLowerCase();
+            let normalizovanoPrezime = prezime.charAt(0).toUpperCase() + prezime.slice(1).toLowerCase();
+            
+            let indeks = -1;
+            for(let i = 0; i < bazaPodataka.length; i++) {
+                if(bazaPodataka[i].ime === normalizovanoIme && bazaPodataka[i].prezime === normalizovanoPrezime) {
+                    indeks = i;
+                    break;
+                }
+            }
+            if(indeks === -1) {
+                document.getElementById("ispis").innerHTML = "Taj korisnik ne postoji u bazi!"
+                return;
+            }
+            else {
+                bazaPodataka.splice(indeks,1);
+                document.getElementById("ispis").innerHTML = "Korisnik " + normalizovanoIme + " " + normalizovanoPrezime + " je obrisan!"
+                return;
+            }
+        }
+
+        function sequenceNumber() {
+            let ime = document.getElementById("ime").value;
+            let prezime = document.getElementById("prezime").value;
+            let normalizovanoIme = ime.charAt(0).toUpperCase() + ime.slice(1).toLowerCase();
+            let normalizovanoPrezime = prezime.charAt(0).toUpperCase() + prezime.slice(1).toLowerCase();
+
+            let indeks = -1;
+            for(let i = 0; i < bazaPodataka.length; i++) {
+                if(bazaPodataka[i].ime === normalizovanoIme && bazaPodataka[i].prezime === normalizovanoPrezime) {
+                    indeks = i;
+                    break;
+                }
+            }
+            if(indeks === -1) {
+                document.getElementById("ispis").innerHTML = "Taj korisnik ne postoji u bazi!"
+                return;
+            }
+            else {
+                document.getElementById("ispis").innerHTML = "Korisnik " + normalizovanoIme + " " + normalizovanoPrezime + 
+                " je u bazi pod rednim brojem [" + (indeks+1) + "]";
+                return;
+            }
+        }
+
+    </script>
+
+</body>
+</html>

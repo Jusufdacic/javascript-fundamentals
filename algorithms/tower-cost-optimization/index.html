@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Minimize the cost of operation to equalize tower heights</h1>
+    <label>Unesi niz visina tornja: </label><input type="text" id="visine" placeholder="Unesi niz"><br>
+    <label>Unesi troskove dodavanja ili uklanjanja blokova: </label><input type="text" id="troskovi"
+        placeholder="Unesi niz"><br>
+    <button onclick="izracunaj()">Izracunaj</button>
+    <p id="izlaz">Izlaz:</p>
+    <script>
+        function izracunaj() {
+            const $ = id => document.getElementById(id);
+            let nizVisinaStr = $("visine").value.split(",");
+            let nizTroskovaStr = $("troskovi").value.split(",");
+            let nizVisina = [];
+            let nizTroskova = [];
+
+            if (nizVisinaStr.length !== nizTroskovaStr.length) {
+                $("izlaz").innerHTML = "Neuskladjen unos!"
+                return;
+            }
+
+            for (let i = 0; i < nizVisinaStr.length; i++) {
+                if (isNaN(Number(nizVisinaStr[i])) || isNaN(Number(nizTroskovaStr[i]))) {
+                    $("izlaz").innerHTML = "Niste unjeli cijele brojeve!"
+                    return;
+                }
+                if (Number(nizVisinaStr[i]) < 0 || Number(nizTroskovaStr[i]) < 0) {
+                    $("izlaz").innerHTML = "Negativni brojevi nisu podrzani!"
+                    return;
+                }
+                nizVisina.push(Number(nizVisinaStr[i]));
+                nizTroskova.push(Number(nizTroskovaStr[i]));
+            }
+
+            let praviTrosak = Infinity;
+
+            for (let i = 0; i < nizVisina.length; i++) {
+                let privremeniTrosak = 0;
+                for (let j = 0; j < nizVisina.length; j++) {
+                    if (i === j) {
+                        continue;
+                    }
+                    let razlika = 0;
+                    if (nizVisina[i] < nizVisina[j]) {
+                        razlika = nizVisina[j] - nizVisina[i];
+                    }
+                    else if (nizVisina[i] > nizVisina[j]) {
+                        razlika = nizVisina[i] - nizVisina[j];
+                    }
+                    privremeniTrosak += razlika * nizTroskova[j];
+                }
+                if (privremeniTrosak < praviTrosak) {
+                    praviTrosak = privremeniTrosak;
+                }
+            }
+            $("izlaz").innerHTML = "Izlaz: " + praviTrosak;
+        }
+
+    </script>
+
+</body>
+
+</html>
