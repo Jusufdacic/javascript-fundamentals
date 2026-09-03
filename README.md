@@ -1,14 +1,13 @@
 # JavaScript Fundamentals
 
-A collection of JavaScript exercises focused on algorithmic problem-solving and DOM manipulation, written in vanilla JavaScript (no frameworks or libraries).
+A collection of JavaScript exercises focused on algorithmic problem-solving, DOM manipulation, and REST API integration, written in vanilla JavaScript (no frameworks or libraries).
 
 ## Structure
-
-```
 javascript-fundamentals/
-├── algorithms/          # Algorithmic problem-solving exercises
-└── dom/                 # DOM manipulation exercises
-```
+├── algorithms/ # Algorithmic problem-solving exercises
+├── dom/ # DOM manipulation exercises
+└── api-integration/ # REST API consumption exercises
+
 
 ## Algorithms
 
@@ -32,9 +31,15 @@ javascript-fundamentals/
 | [Dynamic CSS Injection](./dom/dynamic-css-injection) | Creates and styles elements at runtime using `createElement`, `appendChild`, and dynamic class assignment. |
 | [Random Cell Fill](./dom/random-cell-fill) | Populates a table with randomly selected, non-repeating cells using a `while` loop. |
 
+## API Integration
+
+| Exercise | Description |
+|---|---|
+| [REST CRUD Client](./api-integration/rest-crud-client) | A vanilla JavaScript client performing full CRUD operations against a REST API using `fetch`, including filtered search and a dynamically populated dropdown loaded from a lookup endpoint. |
+
 ## How to Run
 
-Each exercise is self-contained in its own folder. Open the `index.html` file in any modern browser — no build step or dependencies required.
+Each exercise is self-contained in its own folder. Open the `index.html` file in any modern browser — no build step or dependencies required. The API Integration exercise expects a paired backend API to be running (see its own README for details).
 
 ## Author
 
