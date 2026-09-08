@@ -7,6 +7,9 @@ No frameworks, no libraries, no build step. Each exercise is a self-contained pa
 Structure
 
 javascript-fundamentals/
-├── algorithms/          # Algorithmic problem-solving
-├── dom/                 # DOM manipulation
-└── api-integration/     # REST API consumption
+
+   ├── algorithms/          # Algorithmic problem-solving
+
+   ├── dom/                 # DOM manipulation
+
+   └── api-integration/     # REST API consumption
