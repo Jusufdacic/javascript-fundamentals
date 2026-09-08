@@ -1,12 +1,11 @@
 # Trapping Rain Water
 
-## Task
+## Problem
 
-Given an array of non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
+Given an array of non-negative integers representing an elevation map, where each value is the height of a bar of width 1, calculate how much rainwater is trapped between the bars after it rains.
 
-Water trapped above any given bar is limited by the shorter of the tallest bar to its left and the tallest bar to its right, minus the height of the bar itself.
+Rated **Hard** on LeetCode.
 
-**Example:**
 ```
 Input:  [0,1,0,2,1,0,1,3,2,1,2,1]
 Output: 6
@@ -14,10 +13,12 @@ Output: 6
 
 ## Approach
 
-For each position in the array, the amount of water it can hold equals:
-```
-min(maxLeft, maxRight) - height[i]
-```
-The solution precomputes the maximum height to the left and to the right of every index, then sums the trapped water across all positions.
+Water can only be held where a lower section sits between two higher ones. The solution walks the array looking for these boundary pairs: it holds a left wall, then advances until it finds a bar tall enough to close the valley.
 
-This is a classic LeetCode Hard problem, solved here in vanilla JavaScript.
+Once a pair is found, the water in between is accumulated against whichever wall is shorter, since that is what limits the level. When the right wall is the shorter of the two, the inner loop runs backwards and raises its reference height whenever it meets a taller bar, so a descending staircase on the right side is measured correctly rather than producing negative contributions.
+
+Input is validated before processing: every entry must be a non-negative integer, otherwise the run is rejected with a message.
+
+## Run
+
+Open `index.html` in a browser, enter comma-separated heights, and press the button.

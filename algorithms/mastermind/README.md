@@ -1,19 +1,28 @@
 # Mastermind
 
-## Task
+## Problem
 
-Implement the scoring logic for the Mastermind code-breaking game. Given a hidden code and a player's guess (both arrays of digits), determine:
+Implement the code-breaking game. A hidden four-digit code is generated; the player has ten attempts to guess it. After each guess, the game reports how many digits are correct **and in the right position**, and how many are correct but **in the wrong position**.
 
-- The number of digits that are correct **and** in the correct position.
-- The number of digits that are correct but in the **wrong** position.
-
-**Constraint:** the code may contain repeated digits, which must be handled correctly — a digit already matched in the "correct position" pass must not be counted again in the "wrong position" pass.
+The difficulty is in the second count. A digit already matched exactly must not be counted again as a partial match, and a repeated digit in the guess must not match the same digit in the code twice.
 
 ## Approach
 
-The solution works in two passes over copies of both arrays:
+Scoring runs in two passes over copies of both arrays.
 
-1. **First pass** — find exact position matches. When found, null out that position in both the guess and the code copy so it can't be matched again.
-2. **Second pass** — for remaining (non-null) positions, check if the guessed digit exists anywhere else in the remaining code, counting it as a "wrong position" match and nulling it out once used.
+**First pass** — compare position by position. On an exact match, increment the counter and set that index to `null` in **both** the guess copy and the code copy, so the digit is consumed on both sides.
 
-This two-pass, mutual-nulling approach prevents duplicate digits from being counted more than once.
+**Second pass** — for each remaining position in the code, search the remaining positions in the guess for the same value. On a match, increment the wrong-position counter and null out that entry in both arrays, then break so a single digit is never consumed twice. The `!== null` check prevents already-consumed slots from matching each other.
+
+Without nulling both sides, a code like `1123` scored against a guess like `1145` would count the extra `1` twice.
+
+## Features
+
+- Ten attempts, with the interface disabled on a win or after the last attempt
+- Running history of guesses with their scores
+- Toggle to reveal or hide the code, using a boolean flipped on each call
+- Full reset for a new round
+
+## Run
+
+Open `index.html` in a browser.

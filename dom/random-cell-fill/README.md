@@ -1,9 +1,17 @@
 # Random Cell Fill
 
-## Task
+## Problem
 
-Populate a fixed-size table (grid) by randomly selecting cells to fill, ensuring no cell is selected more than once, until every cell has been filled.
+For each row of a table, fill a random number of cells with text, without ever filling the same cell twice within a row.
 
 ## Approach
 
-Since the number of attempts needed to hit all unique cells isn't known in advance (duplicates are possible), a `while` loop is used instead of a `for` loop — it continues generating random cell coordinates and checking them against an "already filled" list until every cell in the grid has been covered exactly once.
+The interesting part is the loop choice. Because randomly chosen cells can repeat, and repeats are discarded, the number of attempts needed is not known in advance — so a `for` loop counting a fixed number of iterations would sometimes finish with fewer cells filled than intended.
+
+Instead the loop is a `while`, conditioned on how many **unique** cells have been filled so far. Each iteration picks a random position, checks it against the list of already-used positions with `includes`, and skips to the next iteration if it is a duplicate. The loop therefore counts successes, not attempts.
+
+A reset clears every cell before each run.
+
+## Run
+
+Open `index.html` in a browser.

@@ -1,15 +1,19 @@
-# Stock Trading (Buy Low, Sell High)
+# Stock Trading
 
-## Task
+## Problem
 
-Given a sequence of daily stock prices, determine the points at which to buy and sell in order to maximize total profit. Multiple buy/sell cycles are allowed, but you must sell before buying again.
+Given a sequence of daily stock prices, find every profitable buy/sell pair. Multiple trades are allowed, but a position must be sold before another can be opened.
 
 ## Approach
 
-A single pass through the price array using a boolean flag (`imamDionicu` — "I own a stock") to track state:
+The naive solution compares every possible pair of days with nested loops. This one makes a single pass instead, using a boolean flag to track whether a position is currently open.
 
-- **Buy** when the price is at a local minimum (starts rising the next day) and no stock is currently held.
-- **Sell** when the price is about to drop and a stock is currently held.
-- Any remaining open position at the end of the array is closed out.
+- **Buy** when the price is lower than the next day's and nothing is held — the start of an upward run.
+- **Sell** when the price is higher than the next day's and something is held — the peak before a decline.
+- After the loop, if a position is still open, it is closed on the final day, so an upward run that reaches the end of the sequence is not discarded.
 
-This avoids nested loops in favor of a single linear pass with state tracking.
+Each completed trade is stored as a buy day, sell day, and profit, and all of them are reported rather than just the single largest gain.
+
+## Run
+
+Open `index.html` in a browser, enter the number of days and the comma-separated prices, and press the button.

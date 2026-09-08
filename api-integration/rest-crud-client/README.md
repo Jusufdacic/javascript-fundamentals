@@ -1,19 +1,27 @@
 # REST CRUD Client
 
-## Task
+## Problem
 
-Build a vanilla JavaScript client that consumes a REST API to perform full CRUD (Create, Read, Update, Delete) operations on a list of records ("polaznici" — participants), including a filtered search and a dynamically populated dropdown loaded from a separate lookup endpoint.
+Build a client that performs full create, read, update, and delete operations against a REST API, using only vanilla JavaScript.
 
 ## Approach
 
-- **`fetch`** is used for every network call, with a consistent `.then().catch()` chain for handling responses and errors.
-- **Read** — `prikaziSve()` fetches all records and renders them into the table via template literals; `prikaziFilter()` does the same with a query parameter.
-- **Create** — `dodaj()` collects form input values into an object and sends it as a JSON body via a `POST` request.
-- **Update** — `azuriraj()` prompts for a new value and sends it via a `PUT` request.
-- **Delete** — `obrisi()` sends a `DELETE` request with the record's id in the URL.
-- A dropdown (`<select>`) is populated dynamically on page load by fetching a separate lookup/reference endpoint and creating `<option>` elements with `createElement`/`appendChild`.
-- All network errors are caught and displayed to the user instead of failing silently.
+Every request goes through `fetch` with promise chains, following the same shape throughout: send the request, parse the response, render the result, and catch failures.
+
+**Read** — fetches all records and renders them into a table built with template literals. A second endpoint returns a filtered set based on a query parameter taken from the input field.
+
+**Create** — collects the form values into an object using property shorthand, serialises it with `JSON.stringify`, and sends it as a `POST` with the appropriate content-type header.
+
+**Update** — prompts for the new value and sends it as a `PUT` request identifying the record by id.
+
+**Delete** — sends a `DELETE` request with the record id in the path.
+
+After every mutation the table is re-fetched rather than patched locally, so what is displayed always reflects what the server actually holds.
+
+A dropdown is populated at page load from a separate lookup endpoint, with each `<option>` created through `createElement` and attached with `appendChild`.
+
+Errors from any request are caught and written to a dedicated message element, so a failure is visible to the user instead of disappearing into the console.
 
 ## Note
 
-This is a **client-only** exercise — it expects a paired REST API backend running locally (the `baseUrl` at the top of `script.js` points to `https://localhost:7117/api/RWA`) and is included here to demonstrate REST API consumption patterns in vanilla JavaScript, not as a standalone runnable app.
+This exercise implements the client side only. It expects a paired REST API to be running — the base URL is set at the top of `script.js`.

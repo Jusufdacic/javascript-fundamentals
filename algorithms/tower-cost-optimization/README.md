@@ -1,17 +1,19 @@
 # Tower Cost Optimization
 
-## Task
+## Problem
 
-Given an array of tower heights and a fixed adjustment value `K`, choose how many of the towers (starting from the tallest) should be **decreased** by `K`, and the rest **increased** by `K`, in order to **minimize the difference between the resulting maximum and minimum height**.
+Given a set of towers, each with a height and an individual cost of modification, find the cheapest height to level all of them to.
 
-Negative resulting heights are discarded from consideration.
-
-**Examples:**
-```
-K=2, heights=[1,5,8,10]   → minimum possible difference: 5
-K=100, heights=[1,2,3]    → minimum possible difference: 2 (all towers increased)
-```
+The cost of adjusting one tower is the height difference multiplied by that tower's own cost per unit. Because those costs differ from tower to tower, the cheapest target height is not simply the average or the median — a tall tower that is expensive to modify pulls the optimum towards itself.
 
 ## Approach
 
-The array is sorted, then every possible split point is tested: the first `i` towers get `+K`, the rest get `-K`. For each split, the resulting max and min (ignoring negative heights) are compared, and the smallest difference across all splits is kept.
+Every existing tower height is treated as a candidate target. For each candidate, the total cost is calculated as the sum, over all other towers, of the absolute height difference multiplied by that tower's unit cost. The candidate producing the lowest total is returned.
+
+The optimum always lies at one of the existing heights, so the candidate set does not need to extend beyond them.
+
+Both input arrays are validated before processing: they must be the same length, contain only numbers, and hold no negative values.
+
+## Run
+
+Open `index.html` in a browser, enter comma-separated heights and the matching comma-separated costs, and press the button.
