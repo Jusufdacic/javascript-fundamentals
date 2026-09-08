@@ -8,8 +8,8 @@ Structure
 
 javascript-fundamentals/
 
-   ├── algorithms/          # Algorithmic problem-solving
+      ├── algorithms/          # Algorithmic problem-solving
 
-   ├── dom/                 # DOM manipulation
+      ├── dom/                 # DOM manipulation
 
-   └── api-integration/     # REST API consumption
+      └── api-integration/     # REST API consumption
