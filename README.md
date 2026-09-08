@@ -5,6 +5,7 @@ A collection of JavaScript exercises covering algorithmic problem-solving, DOM m
 No frameworks, no libraries, no build step. Each exercise is a self-contained page where the logic, the interface, and the state handling are written by hand. Input validation is implemented throughout rather than assumed.
 
 Structure
+
 javascript-fundamentals/
 ├── algorithms/          # Algorithmic problem-solving
 ├── dom/                 # DOM manipulation
